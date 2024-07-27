@@ -1,14 +1,15 @@
 "use client";
-import React, { use, useContext, useEffect } from "react";
+import React, { use, useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
-
+import MyCart from "./MyCart";
 import { CartContext } from "../_context/CartContext";
 import cartApi from "../_utils/cartApi";
 const Header = () => {
+  let [opencart, setOpencart] = useState(false);
   const { cart, setCart } = useContext(CartContext);
   const path = usePathname();
   let { user } = useUser();
@@ -115,9 +116,15 @@ const Header = () => {
               ) : (
                 <div className=" flex items-center gap-5 ">
                   <h2 className=" flex items-center gap-1">
-                    <ShoppingCart />({cart?.length})
+                    <ShoppingCart
+                      onClick={() => {
+                        setOpencart(!opencart);
+                      }}
+                    />
+                    ({cart?.length})
                   </h2>
                   <UserButton redirectUrl="/" />
+                  <div>{opencart && <MyCart />}</div>
                 </div>
               )}
 
