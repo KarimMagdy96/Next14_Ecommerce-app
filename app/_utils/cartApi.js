@@ -4,8 +4,9 @@ const getUserCartItem = (email) =>
   axiosClient.get(
     `/carts?populate[prodacts][populate]=*&filter[email][$eq]=${email}`
   );
-
+const deleteCartItem = (id) => axiosClient.delete(`/carts/${id}`);
 export default {
   addToCart,
   getUserCartItem,
+  deleteCartItem,
 };
